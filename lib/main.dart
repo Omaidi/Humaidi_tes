@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:webview_flutter/webview_flutter.dart'; // Untuk buka kodingan HTML Bos
+import 'package:webview_flutter/webview_flutter.dart';
+import 'dart:io';
+import 'dart:convert';
 
 void main() {
   runApp(const DTXProject());
@@ -8,7 +10,6 @@ void main() {
 
 class DTXProject extends StatelessWidget {
   const DTXProject({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,10 +20,8 @@ class DTXProject extends StatelessWidget {
   }
 }
 
-// 1. LAYAR SPLASH (TAMPILAN DTX-Hum)
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -31,7 +30,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Tunggu 3 detik baru masuk ke aplikasi utama
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
@@ -43,25 +41,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color(0xFF020617), // Warna gelap sesuai HTML Bos
+      backgroundColor: Color(0xFF020617),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "DTX-Hum",
-              style: TextStyle(
-                fontSize: 48,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF22C55E), // Warna Hijau sesuai tema
-                letterSpacing: 8,
-              ),
-            ),
+            Text("DTX-Hum", style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold, color: Color(0xFF22C55E), letterSpacing: 8)),
             SizedBox(height: 10),
-            Text(
-              "PRO IBN MUHAMMAD",
-              style: TextStyle(fontSize: 12, color: Colors.white54, letterSpacing: 2),
-            ),
+            Text("PRO IBN MUHAMMAD", style: TextStyle(fontSize: 12, color: Colors.white54, letterSpacing: 2)),
             SizedBox(height: 30),
             CircularProgressIndicator(color: Color(0xFF22C55E)),
           ],
@@ -71,18 +58,28 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-// 2. LAYAR UTAMA (Membuka HTML Pad Bos)
-class MainPadApp extends StatelessWidget {
+class MainPadApp extends StatefulWidget {
   const MainPadApp({super.key});
+  @override
+  State<MainPadApp> createState() => _MainPadAppState();
+}
+
+class _MainPadAppState extends State<MainPadApp> {
+  late final WebViewController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0xFF020617))
+      ..loadFlutterAsset('index.html'); // MEMANGGIL FILE HTML BOS
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Text("Pad Berhasil Dimuat!"), // Di sini nanti kita panggil index.html Bos
-        ),
-      ),
+    return Scaffold(
+      body: SafeArea(child: WebViewWidget(controller: controller)),
     );
   }
 }
