@@ -5,7 +5,6 @@ import 'dart:async';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // Paksa Fullscreen Landscape agar Pad terlihat besar
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(const MaterialApp(home: SplashScreen(), debugShowCheckedModeBanner: false));
@@ -27,17 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF020617),
+    return const Scaffold(
+      backgroundColor: Color(0xFF020617),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("DTX-Hum", style: TextStyle(fontSize: 50, color: Colors.green, fontWeight: FontWeight.bold, letterSpacing: 5)),
-            SizedBox(height: 10),
-            CircularProgressIndicator(color: Colors.green),
-          ],
-        ),
+        child: Text("DTX-Hum", style: TextStyle(fontSize: 50, color: Colors.green, fontWeight: FontWeight.bold)),
       ),
     );
   }
@@ -56,24 +48,16 @@ class _DTXMainAppState extends State<DTXMainApp> {
   void initState() {
     super.initState();
     controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted) // AGAR MENU BISA DIKLIK
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0xFF020617))
-      ..setNavigationDelegate(NavigationDelegate(
-        onPageFinished: (url) {
-          // Hilangkan bounce scroll pada Android
-          controller.runJavaScript("document.body.style.overflow = 'hidden'");
-        },
-      ))
       ..loadFlutterAsset('assets/index.html');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async => false,
-        child: WebViewWidget(controller: controller),
-      ),
+      backgroundColor: const Color(0xFF020617),
+      body: SafeArea(child: WebViewWidget(controller: controller)),
     );
   }
 }
