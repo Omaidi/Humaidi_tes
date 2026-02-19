@@ -1,1 +1,76 @@
-[Salin kode HTML yang Bos berikan tadi di sini, TAPI pastikan bagian getBuffer dirubah sedikit]
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>DTX-Hum</title>
+    <style>
+        * { -webkit-tap-highlight-color: transparent; user-select: none; box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; background: #020617; color: white; font-family: sans-serif; height: 100vh; width: 100vw; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .header-info { text-align: center; margin-bottom: 10px; }
+        .header-info h1 { margin: 0; font-size: 20px; color: #22c55e; }
+        .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 90%; height: 70%; }
+        .pad { background: #1e293b; border-radius: 12px; display: flex; align-items: center; justify-content: center; border-bottom: 6px solid #0f172a; font-weight: bold; font-size: 14px; color: #94a3b8; transition: 0.05s; }
+        .pad.active { background: #22c55e !important; color: white; border-bottom: none; transform: translateY(4px); }
+    </style>
+</head>
+<body>
+
+<div class="header-info">
+    <h1>DTX-Hum PRO</h1>
+    <p id="displaySet">Mode: Hadroh</p>
+</div>
+
+<div class="container">
+    <div class="pad" data-id="p1" data-sound="audio/WEDOK DUK.wav">PAD 1</div>
+    <div class="pad" data-id="p2" data-sound="Dtx/kick.mp3">KICK</div>
+    <div class="pad" data-id="p3" data-sound="audio/LANANG DUK.wav">PAD 3</div>
+    <div class="pad" data-id="p4" data-sound="Dtx/snare.mp3">SNARE</div>
+    <div class="pad" data-id="p5" data-sound="Dtx/tom1.mp3">TOM 1</div>
+    <div class="pad" data-id="p6" data-sound="Dtx/crashm.mp3">CRASH</div>
+</div>
+
+<script>
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const buffers = {};
+
+    async function getBuffer(url) {
+        if (buffers[url]) return buffers[url];
+        try {
+            const response = await fetch(url);
+            const arrayBuffer = await response.arrayBuffer();
+            const decodedData = await audioCtx.decodeAudioData(arrayBuffer);
+            buffers[url] = decodedData;
+            return decodedData;
+        } catch (e) {
+            console.error("Gagal memuat audio:", url);
+            return null;
+        }
+    }
+
+    function play(url, id) {
+        if (!url) return;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        
+        getBuffer(url).then(buf => {
+            if (!buf) return;
+            const src = audioCtx.createBufferSource();
+            src.buffer = buf;
+            src.connect(audioCtx.destination);
+            src.start(0);
+            
+            const el = document.querySelector(`[data-id="${id}"]`);
+            el.classList.add('active');
+            setTimeout(() => el.classList.remove('active'), 80);
+        });
+    }
+
+    document.querySelectorAll('.pad').forEach(p => {
+        p.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            play(p.dataset.sound, p.dataset.id);
+        });
+    });
+</script>
+</body>
+</html>
