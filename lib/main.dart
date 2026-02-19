@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'dart:io';
-import 'dart:convert';
+import 'dart:async';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(const DTXProject());
 }
 
@@ -31,13 +32,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainPadApp()),
-      );
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainPadApp()));
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -73,13 +70,21 @@ class _MainPadAppState extends State<MainPadApp> {
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0xFF020617))
-      ..loadFlutterAsset('index.html'); // MEMANGGIL FILE HTML BOS
+      ..setNavigationDelegate(NavigationDelegate(
+        onPageFinished: (String url) {
+          // Memastikan WebView transparan dan bersih
+        },
+      ))
+      ..loadFlutterAsset('assets/index.html'); // Folder standar aset
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: WebViewWidget(controller: controller)),
+      body: WillPopScope(
+        onWillPop: () async => false, // Mencegah keluar aplikasi sembarangan
+        child: WebViewWidget(controller: controller),
+      ),
     );
   }
 }
