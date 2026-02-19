@@ -9,13 +9,11 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-      # Robot disuruh masuk ke folder Coding
+      # Robot sekarang langsung kerja di halaman depan
       - run: flutter pub get
-        working-directory: Coding
       - run: flutter build apk --release --target-platform android-arm64
-        working-directory: Coding
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: DTX-Hum-Release
-          path: Coding/build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
