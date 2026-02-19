@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot TikTok Pro - Solusi Content Creator & Affiliate</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --wa-green: #00ff88;
+            --dark-bg: #000000;
+            --card-bg: #111111;
+            --text-white: #ffffff;
+            --text-gray: #a1a1a6;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animasi Shimmer & Fade */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #444, #fff, #444);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Hero Section */
+        .hero-section { padding: 150px 0 60px; }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+        }
+
+        /* Feature Boxes */
+        .feature-box {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 25px;
+            transition: 0.3s;
+        }
+        .feature-box:hover { border-color: var(--wa-green); }
+
+        /* Pricing Card */
+        .card-pricing {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 40px;
+            position: relative;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-pricing:hover {
+            transform: translateY(-10px);
+            border-color: var(--wa-green);
+        }
+        .featured { border: 2px solid var(--wa-green); }
+
+        /* Buttons */
+        .btn-main {
+            background: #fff;
+            color: #000;
+            font-weight: 700;
+            padding: 15px 30px;
+            border-radius: 15px;
+            text-decoration: none;
+            display: block;
+            transition: 0.3s;
+        }
+        .btn-main:hover { background: var(--wa-green); color: #000; transform: scale(1.02); }
+
+        .btn-outline {
+            border: 1px solid #444;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 15px;
+            text-decoration: none;
+            display: block;
+            transition: 0.3s;
+        }
+        .btn-outline:hover { background: #fff; color: #000; }
+
+        @media (max-width: 768px) {
+            .hero-section { padding: 100px 15px 40px; }
+            .hero-title { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-dark fixed-top py-3">
+        <div class="container d-flex justify-content-between">
+            <a class="navbar-brand fw-bold" href="#"><i class="bi bi-robot me-2 text-success"></i>BOTKILAT</a>
+            <a href="#pricing" class="btn btn-outline-light btn-sm rounded-pill px-3">Beli Sekarang</a>
+        </div>
+    </nav>
+
+    <section class="hero-section text-center">
+        <div class="container px-4" data-aos="fade-up">
+            <h1 class="hero-title mb-4">
+                <span class="shimmer-text text-white">Download Video</span><br>
+                <span style="color: var(--wa-green);">Tanpa Watermark.</span>
+            </h1>
+            <p class="text-secondary mx-auto mb-5 fs-5" style="max-width: 650px;">
+                Cukup kirim link ke WhatsApp, video HD langsung terkirim otomatis dalam 5 detik. Tanpa iklan, tanpa ribet.
+            </p>
+            <div class="d-grid d-md-flex justify-content-center gap-3">
+                <a href="#pricing" class="btn-main shadow-lg">Lihat Harga Promo</a>
+                <a href="https://wa.me/6283853027516" class="btn-outline">Konsultasi Admin</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container py-5">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="fw-bold">Kenapa Kamu Butuh Ini?</h2>
+        </div>
+        <div class="row g-4 text-start">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-box">
+                    <i class="bi bi-cart-check text-success fs-3 mb-3 d-block"></i>
+                    <h5 class="fw-bold text-white">Pemain Affiliate</h5>
+                    <p class="text-secondary small mb-0">Re-upload video TikTok ke Shopee Video jadi lebih profesional tanpa watermark brand lain.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-box">
+                    <i class="bi bi-whatsapp text-success fs-3 mb-3 d-block"></i>
+                    <h5 class="fw-bold text-white">Story WA HD</h5>
+                    <p class="text-secondary small mb-0">Update status galau atau estetik dengan video jernih, bersih, dan memukau teman-temanmu.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-box">
+                    <i class="bi bi-graph-up-arrow text-success fs-3 mb-3 d-block"></i>
+                    <h5 class="fw-bold text-white">Passive Income</h5>
+                    <p class="text-secondary small mb-0">Miliki sistemnya, buka jasa download sendiri, dan dapatkan bayaran 100% masuk kantongmu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="container py-5">
+        <div class="row g-4 justify-content-center">
+            
+            <div class="col-12 col-md-5 col-lg-4" data-aos="fade-right">
+                <div class="card card-pricing h-100 shadow-sm">
+                    <h3 class="fw-bold text-white">Akses User</h3>
+                    <p class="text-secondary small mb-4">Pas banget buat koleksi pribadi.</p>
+                    <div class="mb-4">
+                        <span class="fs-1 fw-bold">Rp 10.000</span>
+                        <span class="text-secondary">/bulan</span>
+                    </div>
+                    <ul class="list-unstyled mb-5 text-secondary">
+                        <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i> Download Sepuasnya</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i> Kualitas HD Original</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i> Respon Cepat 5 Detik</li>
+                    </ul>
+                    <a href="https://wa.me/6283853027516?text=Halo+Admin+Mau+Beli+Akses+User+10rb" class="btn-main text-center">Beli Sekarang</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-5 col-lg-4" data-aos="fade-left">
+                <div class="card card-pricing featured h-100 shadow-lg">
+                    <span class="badge bg-success mb-2 p-2 position-absolute top-0 end-0 m-4">BEST VALUE</span>
+                    <h3 class="fw-bold text-white">Owner Script</h3>
+                    <p class="text-secondary small mb-4">Investasi cerdas, untung berkali lipat.</p>
+                    <div class="mb-4 text-success">
+                        <span class="fs-1 fw-bold">Rp 99.000</span>
+                    </div>
+                    <ul class="list-unstyled mb-5 text-secondary">
+                        <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i> Full Source Code Node.js</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i> Tutorial Instalasi Lengkap</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i> Hak Jual Ulang (Hapus Brand)</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i> Bonus Anti-Delete Message</li>
+                    </ul>
+                    <a href="https://wa.me/6283853027516?text=Halo+Admin+Mau+Beli+Script+Owner+99k" class="btn-main text-center" style="background: var(--wa-green);">Ambil Lisensi</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="py-5 text-center text-secondary border-top border-dark mt-5">
+        <p class="small">© 2026 BOTKILAT. Dioptimasi untuk Kecepatan & Kemudahan.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>

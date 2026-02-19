@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Selamat Anniversary Kita! 💞 Gosok Kartunya ya!</title>
+<link rel="icon" type="image/svg+xml" href="https://feeldreams.github.io/main-icon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://htmlku.com/assets/sweetalert.js"></script>
+<script src="https://htmlku.com/assets/typeit.js"></script>
+<link rel="stylesheet" href="https://htmlku.com/jangankena/style.css">
+</head>
+
+<body>
+<audio src="https://feeldreams.github.io/audio/foreveryoung.mp3" id="linkmp3" class="sembunyi"></audio>
+
+<div class="overlay">
+<div class="loading-message">Hai sayang!<br>Sabar dulu ya..</div>
+<div id="loveIn" class="blocklove"></div>
+</div>
+
+<div id="bodyblur">
+  <!-- GANTI WALLPAPER DI SINI -->
+  <img src="BACKGROUND-KAMU-DISINI.jpg" id="wallpaper"/>
+</div>
+
+<div class="swiper mySwiper">
+<div class="swiper-wrapper">
+
+<!-- SLIDE 1 -->
+<div class="swiper-slide">
+  <div id="stiker1" class="scale0 stiker">
+    <img src="https://feeldreams.github.io/pandapanah.gif"/>
+  </div>
+  <h1 id="teks1" class="scale0 quicksand">Alooo Kamu! 🫶<br><br> >>>></h1>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="swiper-slide">
+  <div id="stiker2" class="scale0 stiker">
+    <img src="https://feeldreams.github.io/pandahiya.gif" />
+  </div>
+  <h1 id="teks2" class="scale0 quicksand">Aku Punya Kejutan Anniversary buat Kamu 😝<br><br> >>>></h1>
+</div>
+
+<!-- SLIDE 3 GAME -->
+<div class="swiper-slide">
+	<div class="main-card">
+	  <h1 id="teks3" class="scale0 quicksand">Gosok kartunya yaa!<br>Cari angka <b>17</b>, <b>11</b> & <b>15</b> 💞</h1>
+
+	  <div class="game-board">
+
+	    <!-- DIGANTI EMOJI KE ANGKA -->
+	    <div class="card" data-emoji="17"><canvas></canvas></div>
+	    <div class="card" data-emoji="11"><canvas></canvas></div>
+	    <div class="card" data-emoji="💗"><canvas></canvas></div>
+	    <div class="card" data-emoji="😍"><canvas></canvas></div>
+
+	    <div class="card" data-emoji="🫰"><canvas></canvas></div>
+	    <div class="card" data-emoji="15"><canvas></canvas></div>
+	    <div class="card" data-emoji="💘"><canvas></canvas></div>
+	    <div class="card" data-emoji="💞"><canvas></canvas></div>
+
+	    <!-- Sembunyikan bom, tetap ada agar script tidak rusak -->
+	    <div class="card" data-emoji="💣" style="display:none;"><canvas></canvas></div>
+
+	  </div>
+	</div>
+
+  <!-- BAGIAN FINAL ANNIVERSARY -->
+  <div id="finalAnniv" class="abs scale0 stiker" style="margin-top:120px">
+     <img id="anim1" src="https://feeldreams.github.io/weee.gif"/>
+     <img id="anim2" class="sembunyi" src="https://htmlku.com/0/panda/terlope2.gif"/>
+     <img id="anim3" class="sembunyi" src="https://feeldreams.github.io/emawh.gif"/>
+  </div>
+
+  <div id="slideText" class="blocktext scale0 abs">
+     <h1 id="romanceText" class="quicksand"></h1>
+  </div>
+
+  <div id="btnNext" class="abs" style="display:none;">
+     <a id="btnLove" class="button-love">❤️ Lanjut</a>
+  </div>
+
+  <div id="Tombol" style="display:none;">
+     <a id="By" onClick="fungsiWA()">💌 Balas</a>
+  </div>
+
+  <p id="pesanWA">Aku udah baca semuanya ❤️</p>
+  <p id="nomorWA">62xxxxxxxxxx</p>
+</div>
+
+</div>
+<div class="swiper-pagination"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="script-anniversary.js"></script>
+</body>
+</html>

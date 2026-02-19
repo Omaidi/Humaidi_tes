@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Master Converter (PDF & Word)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <style>
+        body { background: #e2e8f0; font-family: sans-serif; padding-bottom: 80px; }
+        
+        /* Container A4 Preview */
+        .a4-container {
+            background: white;
+            width: 100%;
+            max-width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 25mm 25mm; /* Margin Standar */
+            
+            direction: rtl;
+            text-align: justify; /* Rata Kanan Kiri */
+            text-align-last: right; 
+            line-height: 1.8;
+            
+            color: #000;
+            white-space: pre-wrap; 
+            overflow-wrap: break-word;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .a4-container {
+                padding: 15px;
+                font-size: 16px !important; /* Visual di HP agak kecil agar muat */
+            }
+        }
+
+        #loading {
+            display: none; position: fixed; top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.9); z-index: 9999; color: white;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading">
+    <div class="spinner-border text-light mb-2" role="status"></div>
+    <div id="loadingText">Memproses...</div>
+</div>
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow border-0 mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0 text-center">🕌 Arabic Converter Pro</h5>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="alert alert-light border small text-center py-2 mb-3">
+                        <span class="badge bg-success me-1">Auto-Fix</span> 
+                        Mengubah <b>الي</b> &rarr; <b>الى</b> | <b>ک</b> &rarr; <b>ك</b> | <b>ۃ</b> &rarr; <b>ة</b>
+                    </div>
+
+                    <textarea id="inputText" class="form-control mb-3" rows="5" placeholder="Paste teks Arab di sini..."></textarea>
+                    
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                             <select id="fontSelect" class="form-select">
+                                <option value="'Amiri', serif">Amiri (Naskhi)</option>
+                                <option value="'Noto Naskh Arabic', serif">Noto Naskh</option>
+                                <option value="'Scheherazade New', serif">Scheherazade</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <select id="fontSizeSelect" class="form-select">
+                                <option value="20px">Ukuran 20 (Kecil)</option>
+                                <option value="24px" selected>Ukuran 24 (Sedang)</option>
+                                <option value="28px">Ukuran 28 (Besar)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold d-block small mb-2 text-muted">Opsi Halaman PDF:</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="pageMode" id="modeNormal" value="normal" checked>
+                            <label class="btn btn-outline-secondary" for="modeNormal">📄 Multi Halaman</label>
+
+                            <input type="radio" class="btn-check" name="pageMode" id="modeFit" value="fit">
+                            <label class="btn btn-outline-secondary" for="modeFit">📉 Muat 1 Halaman</label>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button class="btn btn-danger w-100 fw-bold py-2" onclick="generatePDF()">
+                                📄 Download PDF
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-primary w-100 fw-bold py-2" onclick="generateWord()">
+                                📝 Download Word
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="text-center mb-2"><span class="badge bg-secondary">Preview Hasil (Format A4)</span></div>
+            <div id="printArea" class="a4-container">
+                Teks preview...
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    const input = document.getElementById('inputText');
+    const preview = document.getElementById('printArea');
+    const fontSelect = document.getElementById('fontSelect');
+    const fontSizeSelect = document.getElementById('fontSizeSelect');
+    const loading = document.getElementById('loading');
+    const loadingText = document.getElementById('loadingText');
+
+    // --- 1. LOGIKA SMART AUTO-CORRECT ---
+    function smartCorrect(text) {
+        if (!text) return "";
+        let t = text;
+
+        // Fix Karakter Dasar
+        t = t.replace(/ک/g, 'ك'); 
+        t = t.replace(/ۃ/g, 'ة'); 
+        
+        // Fix Preposisi (Imla')
+        // Mengubah "Ila" (الي) yang salah jadi (الى)
+        t = t.replace(/(^|\s)الي(\s|$)/g, '$1الى$2'); 
+        t = t.replace(/(^|\s)إلي(\s|$)/g, '$1إلى$2');
+        t = t.replace(/(^|\s)حتي(\s|$)/g, '$1حتى$2');
+        
+        return t;
+    }
+
+    function updatePreview() {
+        let rawText = input.value;
+        if(!rawText) {
+            preview.textContent = "Teks preview...";
+            return;
+        }
+        // Jalankan perbaikan pintar sebelum ditampilkan
+        const fixedText = smartCorrect(rawText);
+
+        preview.style.fontFamily = fontSelect.value;
+        preview.style.fontSize = fontSizeSelect.value;
+        preview.textContent = fixedText;
+    }
+
+    input.addEventListener('input', updatePreview);
+    fontSelect.addEventListener('change', updatePreview);
+    fontSizeSelect.addEventListener('change', updatePreview);
+
+
+    // --- 2. FITUR DOWNLOAD PDF ---
+    async function generatePDF() {
+        if(!input.value) return alert("Isi teks dulu!");
+        const mode = document.querySelector('input[name="pageMode"]:checked').value;
+        
+        loading.style.display = 'flex';
+        loadingText.innerText = "Membuat PDF...";
+
+        try {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('printArea');
+            const clone = element.cloneNode(true);
+            
+            // Setup A4 HD
+            const contentWidth = 794; 
+            clone.style.width = contentWidth + 'px';
+            clone.style.height = 'auto'; 
+            clone.style.minHeight = '1123px';
+            clone.style.textAlign = "justify";
+            clone.style.textAlignLast = "right";
+            clone.style.padding = "40px 50px"; 
+            clone.style.position = 'absolute';
+            clone.style.top = '-10000px';
+            document.body.appendChild(clone);
+
+            const canvas = await html2canvas(clone, { scale: 2, useCORS: true });
+            const imgData = canvas.toDataURL('image/png');
+            
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = 210; 
+            const pdfHeight = 297; 
+            const imgProps = pdf.getImageProperties(imgData);
+            const originalImgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            if (mode === 'normal') {
+                let heightLeft = originalImgHeight;
+                let position = 0;
+                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, originalImgHeight);
+                heightLeft -= pdfHeight;
+                while (heightLeft >= 0) {
+                    position = heightLeft - originalImgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, originalImgHeight);
+                    heightLeft -= pdfHeight;
+                }
+            } else {
+                if (originalImgHeight > pdfHeight) {
+                    const scaleFactor = pdfHeight / originalImgHeight;
+                    const finalWidth = pdfWidth * scaleFactor;
+                    const finalHeight = pdfHeight;
+                    const xOffset = (pdfWidth - finalWidth) / 2;
+                    pdf.addImage(imgData, 'PNG', xOffset, 0, finalWidth, finalHeight);
+                } else {
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, originalImgHeight);
+                }
+            }
+            pdf.save('dokumen-arab.pdf');
+            document.body.removeChild(clone);
+        } catch (error) {
+            alert("Gagal: " + error.message);
+        } finally {
+            loading.style.display = 'none';
+        }
+    }
+
+
+    // --- 3. FITUR DOWNLOAD WORD (NEW) ---
+    function generateWord() {
+        if(!input.value) return alert("Isi teks dulu!");
+        
+        loading.style.display = 'flex';
+        loadingText.innerText = "Membuat Word...";
+
+        try {
+            // Ambil teks yang sudah diperbaiki (Auto-Correct)
+            const rawText = input.value;
+            const fixedText = smartCorrect(rawText);
+            
+            // Ubah baris baru (\n) menjadi <br> HTML
+            const htmlContent = fixedText.replace(/\n/g, '<br>');
+
+            // Header Khusus Word agar Rata Kanan Kiri & RTL berfungsi
+            const header = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+                      xmlns:w='urn:schemas-microsoft-com:office:word' 
+                      xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset='utf-8'>
+                    <title>Dokumen Arab</title>
+                    <style>
+                        body {
+                            font-family: 'Arial', sans-serif;
+                        }
+                        /* Style Khusus Paragraf Arab di Word */
+                        p.arabic-text {
+                            font-family: 'Traditional Arabic', 'Amiri', serif;
+                            font-size: 24pt;
+                            direction: rtl;
+                            text-align: justify;
+                            text-justify: inter-word; /* Kunci Justify di Word */
+                            margin-bottom: 10px;
+                            line-height: 1.5;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <p class="arabic-text">
+                        ${htmlContent}
+                    </p>
+                </body>
+                </html>
+            `;
+
+            // Buat Blob dengan BOM (\ufeff) agar UTF-8 terbaca sempurna
+            const blob = new Blob(['\ufeff', header], {
+                type: 'application/msword'
+            });
+
+            // Download file menggunakan FileSaver.js
+            saveAs(blob, 'dokumen-arab.doc');
+
+        } catch (error) {
+            alert("Gagal Word: " + error.message);
+        } finally {
+            setTimeout(() => { loading.style.display = 'none'; }, 500);
+        }
+    }
+</script>
+</body>
+</html>

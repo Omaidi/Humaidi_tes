@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dokumentasi Haflah</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><style>
+body{
+  background:#f4f6f9;
+}
+.hero{
+  background:linear-gradient(135deg,#0d6efd,#0a58ca);
+  color:#fff;
+  padding:80px 20px;
+  text-align:center;
+  border-radius:0 0 50px 50px;
+}
+
+.photo-card{
+  border:none;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  transition:0.3s;
+  cursor:pointer;
+}
+
+.photo-card:hover{
+  transform:translateY(-8px) scale(1.02);
+}
+
+.photo-card img{
+  height:230px;
+  object-fit:cover;
+}
+
+footer{
+  background:#fff;
+  padding:25px;
+  margin-top:70px;
+  text-align:center;
+}
+</style></head>
+<body><!-- HERO --><section class="hero">
+<h1 class="fw-bold">Dokumentasi Haflah Akhirussanah</h1>
+<p class="lead">Galeri Resmi Foto Kegiatan</p>
+</section><!-- GALERI FOTO --><div class="container my-5"><div class="row g-4"><!-- FOTO 1 --><div class="col-md-3 col-sm-6">
+  <div class="card photo-card" data-bs-toggle="modal" data-bs-target="#photoModal" data-img="https://drive.google.com/uc?export=view&id=1_Gy0mo_PFcB08tD3dPIUOjGd7OQ2CXdt">
+      <img src="https://drive.google.com/thumbnail?id=1_Gy0mo_PFcB08tD3dPIUOjGd7OQ2CXdt" class="card-img-top">
+  </div>
+</div><!-- FOTO CONTOH --><div class="col-md-3 col-sm-6">
+  <div class="card photo-card" data-bs-toggle="modal" data-bs-target="#photoModal" data-img="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b">
+      <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b" class="card-img-top">
+  </div>
+</div><div class="col-md-3 col-sm-6">
+  <div class="card photo-card" data-bs-toggle="modal" data-bs-target="#photoModal" data-img="https://images.unsplash.com/photo-1517457373958-b7bdd4587205">
+      <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205" class="card-img-top">
+  </div>
+</div><div class="col-md-3 col-sm-6">
+  <div class="card photo-card" data-bs-toggle="modal" data-bs-target="#photoModal" data-img="https://images.unsplash.com/photo-1524178232363-1fb2b075b655">
+      <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655" class="card-img-top">
+  </div>
+</div></div><!-- TOMBOL SEMUA FOTO --><div class="text-center mt-5">
+<a href="https://drive.google.com/drive/folders/1ROvjxmicuHvRJg0N7J9ZnMso8Yp7ah1j" target="_blank" class="btn btn-primary btn-lg">Lihat Semua Foto</a>
+</div></div><!-- MODAL FOTO --><div class="modal fade" id="photoModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <img id="modalImage" src="" class="w-100">
+      </div>
+    </div>
+  </div>
+</div><footer>
+<p>© 2026 Panitia Haflah | Galeri Resmi</p>
+</footer><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script><script>
+const cards = document.querySelectorAll('.photo-card');
+cards.forEach(card => {
+  card.addEventListener('click', function(){
+    const img = this.getAttribute('data-img');
+    document.getElementById('modalImage').src = img;
+  });
+});
+</script></body>
+</html>

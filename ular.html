@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Penilaian Cerdas Cermat</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts (opsional, untuk tampilan lebih profesional) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa; /* Light gray background */
+        }
+        .header {
+            background-color: #007bff; /* Primary blue */
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-team {
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease-in-out;
+            background-color: white;
+        }
+        .card-team:hover {
+            transform: translateY(-5px);
+        }
+        .score-display {
+            font-size: 4rem; /* Large font size for score */
+            font-weight: 700;
+            color: #28a745; /* Green for positive scores */
+            margin-bottom: 1.5rem;
+        }
+        .btn-score {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .btn-reset {
+            background-color: #ffc107; /* Warning yellow */
+            border-color: #ffc107;
+            color: #343a40; /* Dark text */
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-reset:hover {
+            background-color: #e0a800;
+            border-color: #e0a800;
+            color: #343a40;
+        }
+        .footer {
+            margin-top: 5rem;
+            padding: 2rem 0;
+            background-color: #343a40; /* Dark background */
+            color: white;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header text-center">
+        <div class="container">
+            <h1 class="display-4">Sistem Penilaian Cerdas Cermat</h1>
+            <p class="lead">Regu A, B, C, D - Penilaian Otomatis</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row justify-content-center g-4">
+            <!-- Regu A -->
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-team h-100">
+                    <div class="card-body text-center">
+                        <h2 class="card-title text-primary mb-4">Regu A</h2>
+                        <p class="score-display" id="scoreA">0</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-score" onclick="addScore('A', 10)">+10 Poin</button>
+                            <button class="btn btn-success btn-score" onclick="addScore('A', 5)">+5 Poin</button>
+                            <button class="btn btn-danger btn-score" onclick="addScore('A', -5)">-5 Poin</button>
+                            <button class="btn btn-danger btn-score" onclick="addScore('A', -10)">-10 Poin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regu B -->
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-team h-100">
+                    <div class="card-body text-center">
+                        <h2 class="card-title text-primary mb-4">Regu B</h2>
+                        <p class="score-display" id="scoreB">0</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-score" onclick="addScore('B', 10)">+10 Poin</button>
+                            <button class="btn btn-success btn-score" onclick="addScore('B', 5)">+5 Poin</button>
+                            <button class="btn btn-danger btn-score" onclick="addScore('B', -5)">-5 Poin</button>
+                            <button class="btn btn-danger btn-score" onclick="addScore('B', -10)">-10 Poin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regu C -->
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-team h-100">
+                    <div class="card-body text-center">
+                        <h2 class="card-title text-primary mb-4">Regu C</h2>
+                        <p class="score-display" id="scoreC">0</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-score" onclick="addScore('C', 10)">+10 Poin</button>
+                            <button class="btn btn-success btn-score" onclick="addScore('C', 5)">+5 Poin</button>
+                            <button class="btn btn-danger btn-score" onclick="addScore('C', -5)">-5 Poin</button>
+                            <button class="btn btn-danger btn-score" onclick="addScore('C', -10)">-10 Poin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regu D -->
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card card-team h-100">
+                    <div class="card-body text-center">
+                        <h2 class="card-title text-primary mb-4">Regu D</h2>
+                        <p class="score-display" id="scoreD">0</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-score" onclick="addScore('D', 10)">+10 Poin</button>
+                            <button class="btn btn-success btn-score" onclick="addScore('D', 5)">+5 Poin</button>
+                            <button class="btn btn-danger btn-score" onclick="addScore('D', -5)">-5 Poin</button>
+                            <button class="btn btn-danger btn-score" onclick="addScore('D', -10)">-10 Poin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <button class="btn btn-reset btn-lg" onclick="resetScores()">Reset Semua Skor</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer text-center">
+        <div class="container">
+            <p>&copy; 2023 Sistem Penilaian Cerdas Cermat. Dibuat dengan Bootstrap.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle (termasuk Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Kunci untuk menyimpan data di localStorage
+        const LOCAL_STORAGE_KEY = 'cerdasCermatScores';
+
+        // Objek untuk menyimpan skor setiap regu
+        // Inisialisasi dengan nilai default atau dari localStorage jika ada
+        let scores = {
+            A: 0,
+            B: 0,
+            C: 0,
+            D: 0
+        };
+
+        // Fungsi untuk memuat skor dari localStorage
+        function loadScores() {
+            const storedScores = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (storedScores) {
+                try {
+                    // Parse string JSON menjadi objek JavaScript
+                    const parsedScores = JSON.parse(storedScores);
+                    // Gabungkan dengan skor default untuk memastikan semua tim ada
+                    // Ini berguna jika ada tim baru ditambahkan di masa depan
+                    scores = { ...scores, ...parsedScores };
+                } catch (e) {
+                    console.error("Error parsing scores from localStorage:", e);
+                    // Jika ada error saat parsing, gunakan skor default
+                    saveScores(); // Simpan skor default yang bersih
+                }
+            }
+        }
+
+        // Fungsi untuk menyimpan skor ke localStorage
+        function saveScores() {
+            // Konversi objek JavaScript menjadi string JSON sebelum disimpan
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(scores));
+        }
+
+        // Fungsi untuk memperbarui tampilan skor di HTML
+        function updateScoreDisplay(team) {
+            const scoreElement = document.getElementById(`score${team}`);
+            scoreElement.textContent = scores[team];
+            // Opsional: Ubah warna skor jika negatif
+            if (scores[team] < 0) {
+                scoreElement.style.color = '#dc3545'; // Merah untuk negatif
+            } else {
+                scoreElement.style.color = '#28a745'; // Hijau untuk positif/nol
+            }
+        }
+
+        // Fungsi untuk menambah atau mengurangi skor
+        function addScore(team, points) {
+            scores[team] += points;
+            updateScoreDisplay(team);
+            saveScores(); // Simpan skor setelah setiap perubahan
+        }
+
+        // Fungsi untuk mereset semua skor
+        function resetScores() {
+            if (confirm("Apakah Anda yakin ingin mereset semua skor?")) {
+                for (let team in scores) {
+                    scores[team] = 0;
+                    updateScoreDisplay(team);
+                }
+                saveScores(); // Simpan skor yang sudah direset
+            }
+        }
+
+        // Inisialisasi tampilan skor saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            loadScores(); // Muat skor dari localStorage saat halaman dimuat
+            for (let team in scores) {
+                updateScoreDisplay(team); // Perbarui tampilan untuk setiap tim
+            }
+        });
+    </script>
+</body>
+</html>
