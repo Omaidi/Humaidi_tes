@@ -1,5 +1,5 @@
 name: dtx_hum
-description: Project Besar DTX Pro Ibn Muhammad
+description: Project DTX-Hum Ibn Muhammad
 publish_to: 'none'
 version: 1.0.0+1
 environment:
@@ -7,12 +7,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  webview_flutter: ^4.4.2
+  webview_flutter: 4.4.2
 flutter:
   uses-material-design: true
   assets:
     - assets/index.html
-    - Dtx/
-    - Simpatik/
-    - ./*.wav
-    - ./*.mp3
